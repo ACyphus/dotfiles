@@ -31,23 +31,23 @@ set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
 set mouse=a
-set cursorline                    
-set ttimeoutlen=100               
-set ruler                         
-set nowrap                        
-set backspace=indent,eol,start    
-set colorcolumn=                  
+set cursorline
+set ttimeoutlen=100
+set ruler
+set nowrap
+set backspace=indent,eol,start
+set colorcolumn=
 set hidden
 
 " set leader key to comma
 let mapleader = ","
 
 " saner searching
-set showmatch                     
-set ignorecase                    
-set hlsearch                      
-set smartcase                     
-set incsearch                     
+set showmatch
+set ignorecase
+set hlsearch
+set smartcase
+set incsearch
 set gdefault
 nnoremap <tab> %
 vnoremap <tab> %
@@ -117,7 +117,7 @@ set backupdir=/tmp
 
 
 " delete all trailing whitespace in current file
-map <leader>w :%s/\s\+$//gce \| w<cr>
+map <leader>W :%s/\s\+$//gce \| w<cr>
 
 " Run specs with ',t' via Gary Bernhardt
 function! RunTests(filename)
@@ -170,7 +170,7 @@ endfunction
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
 
-" auto-add the closing } 
+" auto-add the closing }
 inoremap {<CR> {<CR>}<Esc>ko
 
 " map cake test call to a hotkey
@@ -184,8 +184,8 @@ map <leader>r :TlistToggle<CR>
 let Tlist_Use_Right_Window   = 1
 let tlist_php_settings = 'php;c:class;f:function;d:constant'
 
-let g:syntastic_php_checkers=['php', 'phpmd', 'phpcs'] 
- 
+let g:syntastic_php_checkers=['php', 'phpmd', 'phpcs']
+
 map <leader>n :NERDTree<space>
 
 au BufWritePost *.php silent! !find . -name '*.php' -exec ctags {} +
