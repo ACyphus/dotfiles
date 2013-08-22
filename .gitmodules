@@ -18,7 +18,8 @@
 	url = https://github.com/scrooloose/syntastic.git
 [submodule ".vim/bundle/taglist.vim"]
 	path = .vim/bundle/taglist.vim
-	url = https://github.com/vim-scripts/taglist.vim.git
+    url = https://github.com/vim-scripts/taglist.vim.git
+    ignore = dirty
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
@@ -36,7 +37,8 @@
 	url = https://github.com/tpope/vim-surround
 [submodule ".vim/bundle/vim-rbenv"]
 	path = .vim/bundle/vim-rbenv
-	url = https://github.com/tpope/vim-rbenv
+    url = https://github.com/tpope/vim-rbenv
+    ignore = dirty
 [submodule ".vim/bundle/vim-bundler"]
 	path = .vim/bundle/vim-bundler
 	url = https://github.com/tpope/vim-bundler
@@ -57,4 +59,5 @@
 	url = https://github.com/vim-ruby/vim-ruby.git
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim.git
+    url = https://github.com/vim-scripts/taglist.vim.git
+    ignore = dirty
