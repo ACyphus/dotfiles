@@ -184,11 +184,11 @@ map <leader>r :TlistToggle<CR>
 let Tlist_Use_Right_Window   = 1
 let tlist_php_settings = 'php;c:class;f:function;d:constant'
 
-let g:syntastic_php_checkers=['php', 'phpmd', 'phpcs']
+let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
 
 map <leader>n :NERDTree<space>
 
-au BufWritePost *.php silent! !find . -name '*.php' -exec ctags {} +
+map <silent> <leader>zz !find . -name '*.php' -exec ctags {} +
 
 " Quickly edit/reload the vimrc file
 nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
