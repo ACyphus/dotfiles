@@ -1,7 +1,7 @@
 [core]
     quotepath = false
     editor = vim
-    excludesfile = /Users/david/.dotfiles/.gitignore
+    excludesfile = /Users/david/.dotfiles/.globalgitignore
 [user]
     name = Dave Baker
     email = david@fullybaked.co.uk
