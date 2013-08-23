@@ -199,3 +199,6 @@ inoremap jj <ESC>
 
 " open a new buffer in a veritcal split and switch focus to it
 nnoremap <leader>w <C-w>v<C-w>l
+
+" quick git commit of current file
+map <leader>co :!git commit %<cr>
