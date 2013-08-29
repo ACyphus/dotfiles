@@ -123,7 +123,7 @@ let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
 " [[ Keybindings
 
 " NerdTree config
-map <leader>n :NERDTreeToggle<space>
+map <leader>n :NERDTreeToggle<cr>
 
 " Quickly edit/reload the vimrc file
 nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
