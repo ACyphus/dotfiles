@@ -16,6 +16,10 @@ set sts=4
 set shiftwidth=4
 set expandtab
 
+" Context-dependent cursor in the terminal
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7""
+
 " Swap files. Generally things are in version control
 " don't use backupfiles either.
 set noswapfile
@@ -29,6 +33,7 @@ set showcmd
 set hidden
 set wildmenu
 set wildmode=list:longest,full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.pyc,node_modules/*
 set visualbell
 set cursorline
 set ttyfast
@@ -72,6 +77,8 @@ highlight SpecialKey guifg=#4a4a59
 " save all buffers on focus lost
 au FocusLost * :wa
 
+" [[ Theming/Colors
+
 " set up some custom colors
 highlight clear SignColumn
 highlight VertSplit    ctermbg=236
@@ -101,6 +108,48 @@ if version >= 700
   au InsertLeave * hi StatusLine ctermbg=LightGray ctermfg=Black
 endif
 
+" ]]
+
+" [[ Misc Settings
+
+" auto-add the closing }
+inoremap {<CR> {<CR>}<Esc>ko
+
+" syntastic PHP config
+let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
+
+" ]]
+
+" [[ Keybindings
+
+" NerdTree config
+map <leader>n :NERDTreeToggle<space>
+
+" Quickly edit/reload the vimrc file
+nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" map double j to esc to exit insert mode
+inoremap jj <ESC>
+
+" open a new buffer in a veritcal split and switch focus to it
+nnoremap <leader>w <C-w>v<C-w>l
+
+" map cake test call to a hotkey
+map <leader>ct :!../cake/console/cake testsuite<space>
+
+" add hotkey map to paste model toggle
+map <leader>p :set paste!<CR>
+
+" TagList configuration 
+map <leader>r :TlistToggle<CR>
+let Tlist_Use_Right_Window   = 1
+let tlist_php_settings = 'php;c:class;f:function;d:constant'
+
+" ruby test runners
+map <leader>t :call RunTestFile()<cr>
+map <leader>T :call RunNearestTest()<cr>
+
 " map markdown preview
 map <leader>m :!open -a Marked %<cr><cr>
 
@@ -113,14 +162,46 @@ let g:ctrlp_match_window_reversed = 0
 " navigate through buffers
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
+
+" traverse windows
 map <C-L> <C-W>l
 map <C-H> <C-W>h
 
-" use /tmp for all swap files
-set backupdir=/tmp
-
 " delete all trailing whitespace in current file
 map <leader>W :%s/\s\+$//gce \| w<cr>
+
+" ]]
+
+" [[ Specific File Type Settings
+
+" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+" Map *.coffee to coffee type
+au BufRead,BufNewFile *.coffee  set ft=coffee
+
+" Highlight JSON like Javascript
+au BufNewFile,BufRead *.json set ft=javascript
+
+" make python 
+au FileType python setl softtabstop=4 shiftwidth=4 tabstop=4 expandtab
+
+" Make ruby use 2 spaces for indentation.
+au FileType ruby setl softtabstop=2 tabstop=2 expandtab
+
+" php settings
+au BufRead,BufNewFile *.ctp set ft=php " cakephp view files
+au filetype php setl softtabstop=4 shiftwidth=4 tabstop=4 expandtab
+
+" Javascript settings
+au FileType javascript setl softtabstop=4 shiftwidth=4 tabstop=4 expandtab
+
+" Coffeescript uses 2 spaces too.
+au FileType coffee setl softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+
+" ]]
+
+" [[ Helper Functions
 
 " Run specs with ',t' via Gary Bernhardt
 function! RunTests(filename)
@@ -169,39 +250,4 @@ function! RunNearestTest()
   call RunTestFile(":" . spec_line_number . " -b")
 endfunction
 
-" run test runner
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-
-" auto-add the closing }
-inoremap {<CR> {<CR>}<Esc>ko
-
-" map cake test call to a hotkey
-map <leader>ct :!../cake/console/cake testsuite<space>
-
-" add hotkey map to paste model toggle
-map <leader>p :set paste!<CR>
-
-" hot key for method list
-map <leader>r :TlistToggle<CR>
-let Tlist_Use_Right_Window   = 1
-let tlist_php_settings = 'php;c:class;f:function;d:constant'
-
-let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
-
-map <leader>n :NERDTree<space>
-
-map <silent> <leader>zz !find . -name '*.php' -exec ctags {} +
-
-" Quickly edit/reload the vimrc file
-nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" map double j to esc to exit insert mode
-inoremap jj <ESC>
-
-" open a new buffer in a veritcal split and switch focus to it
-nnoremap <leader>w <C-w>v<C-w>l
-
-" quick git commit of current file
-map <leader>co :!git commit %<cr>
+" ]]
