@@ -16,6 +16,12 @@ set sts=4
 set shiftwidth=4
 set expandtab
 
+" Swap files. Generally things are in version control
+" don't use backupfiles either.
+set noswapfile
+set nobackup
+set nowritebackup
+
 set encoding=utf-8
 set scrolloff=3
 set showmode
