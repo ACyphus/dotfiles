@@ -30,12 +30,10 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
-set mouse=a
 set cursorline
 set ttimeoutlen=100
 set ruler
 set nowrap
-set backspace=indent,eol,start
 set colorcolumn=
 set hidden
 
@@ -58,9 +56,9 @@ map <leader>a :Ag!<space>
 " put useful info in status bar
 set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
 
-" invisible characer behvaiour
+" invisible character behvaiour
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:·
 map <leader>l :set list!<CR>
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
@@ -85,7 +83,7 @@ highlight PmenuSel     ctermbg=0   ctermfg=3
 highlight SpellBad     ctermbg=0   ctermfg=1
 highlight ColorColumn ctermbg=238
 
-" theme for MacVim
+" theme for MacVim/GVim
 if has("gui_running")
     colorscheme Tomorrow-Night
     set guifont=Bitstream\ Vera\ Sans\ Mono:h14
@@ -114,7 +112,6 @@ map <C-H> <C-W>h
 
 " use /tmp for all swap files
 set backupdir=/tmp
-
 
 " delete all trailing whitespace in current file
 map <leader>W :%s/\s\+$//gce \| w<cr>
