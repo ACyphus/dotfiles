@@ -98,15 +98,10 @@ highlight ColorColumn ctermbg=238
 
 " theme for MacVim/GVim
 if has("gui_running")
-    colorscheme Tomorrow-Night
+    colorscheme solarized
+    set background=light
     set guifont=Bitstream\ Vera\ Sans\ Mono:h14
 end
-
-" highlight the status bar when in insert mode
-if version >= 700
-  au InsertEnter * hi StatusLine ctermfg=LightGreen ctermbg=Red
-  au InsertLeave * hi StatusLine ctermbg=LightGray ctermfg=Black
-endif
 
 " ]]
 
@@ -141,10 +136,8 @@ map <leader>ct :!../cake/console/cake testsuite<space>
 " add hotkey map to paste model toggle
 map <leader>p :set paste!<CR>
 
-" TagList configuration 
-map <leader>r :TlistToggle<CR>
-let Tlist_Use_Right_Window   = 1
-let tlist_php_settings = 'php;c:class;f:function;d:constant'
+" TagList configuration
+map <leader>r :TagbarToggle<CR>
 
 " ruby test runners
 map <leader>t :call RunTestFile()<cr>
@@ -183,7 +176,7 @@ au BufRead,BufNewFile *.coffee  set ft=coffee
 " Highlight JSON like Javascript
 au BufNewFile,BufRead *.json set ft=javascript
 
-" make python 
+" make python
 au FileType python setl softtabstop=4 shiftwidth=4 tabstop=4 expandtab
 
 " Make ruby use 2 spaces for indentation.
