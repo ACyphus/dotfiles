@@ -8,6 +8,12 @@ filetype plugin indent on
 " no vi support
 set nocompatible
 
+" include system copy buffer
+set clipboard+=unnamed
+
+" enable mouse support
+set mouse=a
+
 " set up default indent/tabbing behaviour
 set autoindent
 set copyindent
@@ -85,9 +91,14 @@ set t_Co=256
 let g:airline_powerline_fonts=1
 let g:airline_theme='molokai'
 
+colorscheme tomorrow-night
+set background=dark
+
+" prevent text background differing from vim/term bg
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+
 if has("gui_running")
-    colorscheme tomorrow-night
-    set background=dark
     set guifont=Sauce\ Code\ Powerline\ Light:h14
 end
 
@@ -168,6 +179,9 @@ au BufRead,BufNewFile *.coffee  set ft=coffee
 
 " Highlight JSON like Javascript
 au BufNewFile,BufRead *.json set ft=javascript
+
+" cucumber settings
+au FileType cucumber setl softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 
 " make python
 au FileType python setl softtabstop=4 shiftwidth=4 tabstop=4 expandtab
