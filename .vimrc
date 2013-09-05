@@ -167,6 +167,17 @@ map <C-H> <C-W>h
 " delete all trailing whitespace in current file
 map <leader>W :%s/\s\+$//gce \| w<cr>
 
+" git mappings
+map <leader>gc :!git commit % -m '
+map <leader>gd :!git diff<cr>
+map <leader>gl :!gitlog<cr>
+map <leader>gp :!git push<cr>
+map <leader>gs :!git status<cr>
+
+" capistrano mappings
+map <leader>cd :!cap deploy<cr>
+map <leader>cp :!cap prod deploy<cr>
+map <leader>cc :!cap deploy:cleanup<cr>
 " ]]
 
 " [[ Specific File Type Settings
@@ -249,5 +260,17 @@ function! RunNearestTest()
   let spec_line_number = line('.')
   call RunTestFile(":" . spec_line_number . " -b")
 endfunction
+
+" ]]
+
+" [[ xmpfilter for ruby
+
+nmap <buffer> <leader>x <Plug>(xmpfilter-run)
+xmap <buffer> <leader>x <Plug>(xmpfilter-run)
+imap <buffer> <leader>x <Plug>(xmpfilter-run)
+
+nmap <buffer> <leader>X <Plug>(xmpfilter-mark)
+xmap <buffer> <leader>X <Plug>(xmpfilter-mark)
+imap <buffer> <leader>X <Plug>(xmpfilter-mark)
 
 " ]]
