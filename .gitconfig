@@ -1,5 +1,5 @@
 [core]
-    quotepath = false
+	quotepath = false
     editor = vim
     excludesfile = /Users/david/.dotfiles/.globalgitignore
 [user]
@@ -28,3 +28,6 @@
     added = yellow
     changed = green
     untracked = blue
+[alias]
+	co = checkout
+	ci = commit
