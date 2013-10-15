@@ -9,7 +9,9 @@ filetype plugin indent on
 set nocompatible
 
 " include system copy buffer
-set clipboard+=unnamed
+if $TMUX == ''
+    set clipboard+=unnamed
+endif
 
 " enable mouse support
 set mouse=a
@@ -23,8 +25,13 @@ set shiftwidth=4
 set expandtab
 
 " Context-dependent cursor in the terminal
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7""
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
 " Swap files. Generally things are in version control
 " don't use backupfiles either.
@@ -121,63 +128,56 @@ let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
 
 " [[ Keybindings
 
-" NerdTree config
-map <leader>n :NERDTreeToggle<cr>
+" C MAP
+map <leader>cc :!cap deploy:cleanup<cr>
+map <leader>cd :!cap deploy<cr>
+map <leader>cp :!cap prod deploy<cr>
 
-" Quickly edit/reload the vimrc file
+" E MAP
 nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" map double j to esc to exit insert mode
-inoremap jj <ESC>
-
-" open a new buffer in a veritcal split and switch focus to it
-nnoremap <leader>w <C-w>v<C-w>l
-
-" map cake test call to a hotkey
-map <leader>ct :!../cake/console/cake testsuite<space>
-
-" add hotkey map to paste model toggle
-map <leader>p :set paste!<CR>
-
-" TagList configuration
-map <leader>r :TagbarToggle<CR>
-
-" ruby test runners
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-
-" map markdown preview
-map <leader>m :!open -a Marked %<cr><cr>
-
-" ctrlp config
+" F MAP
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_max_height = 30
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_reversed = 0
 
-" navigate through buffers
-map <C-J> :bnext<CR>
-map <C-K> :bprev<CR>
-
-" traverse windows
-map <C-L> <C-W>l
-map <C-H> <C-W>h
-
-" delete all trailing whitespace in current file
-map <leader>W :%s/\s\+$//gce \| w<cr>
-
-" git mappings
+" G MAP
 map <leader>gc :!git commit % -m '
 map <leader>gd :!git diff<cr>
-map <leader>gl :!gitlog<cr>
+map <leader>gl :!git log --format='%h - %s (%cr) <%an>'<cr>
 map <leader>gp :!git push<cr>
 map <leader>gs :!git status<cr>
 
-" capistrano mappings
-map <leader>cd :!cap deploy<cr>
-map <leader>cp :!cap prod deploy<cr>
-map <leader>cc :!cap deploy:cleanup<cr>
+" J MAP
+inoremap jj <ESC>
+
+" M MAP
+map <leader>m :!open -a Marked %<cr><cr>
+
+" N MAP
+map <leader>n :NERDTreeToggle<cr>
+
+" P MAP
+map <leader>p :set paste!<CR>
+
+" R MAP
+map <leader>r :TagbarToggle<CR>
+
+" T MAP
+map <leader>t :call RunTestFile()<cr>
+map <leader>T :call RunNearestTest()<cr>
+
+" W MAP
+nnoremap <leader>w <C-w>v<C-w>l
+map <leader>W :%s/\s\+$//gce \| w<cr>
+
+" CTRL MAP
+map <C-J> :bnext<CR>
+map <C-K> :bprev<CR>
+map <C-L> <C-W>l
+map <C-H> <C-W>h
+
 " ]]
 
 " [[ Specific File Type Settings
@@ -191,6 +191,7 @@ au BufRead,BufNewFile *.coffee  set ft=coffee
 " Highlight JSON like Javascript
 au BufNewFile,BufRead *.json set ft=javascript
 
+au FileType ruby set sts=2 sw=2 ts=2 expandtab
 " cucumber settings
 au FileType cucumber setl softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 
