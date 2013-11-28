@@ -106,7 +106,7 @@ highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
 if has("gui_running")
-    set guifont=Sauce\ Code\ Powerline\ Light:h14
+    set guifont=Sauce\ Code\ Powerline:h14
 end
 
 " set up some custom colors
@@ -133,6 +133,9 @@ map <leader>cc :!cap deploy:cleanup<cr>
 map <leader>cd :!cap deploy<cr>
 map <leader>cp :!cap prod deploy<cr>
 
+" B MAP
+map <leader>b :!open -a Google\ Chrome %<cr>
+
 " E MAP
 nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
@@ -153,7 +156,7 @@ map <leader>gs :!git status<cr>
 inoremap jj <ESC>
 
 " M MAP
-map <leader>m :!open -a Marked %<cr><cr>
+map <leader>m :!open -a Mou %<cr><cr>
 
 " N MAP
 map <leader>n :NERDTreeToggle<cr>
@@ -275,3 +278,71 @@ xmap <buffer> <leader>X <Plug>(xmpfilter-mark)
 imap <buffer> <leader>X <Plug>(xmpfilter-mark)
 
 " ]]
+
+" [[ neocomplete settings
+" https://github.com/Shougo/neocomplete.vim
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+" ]]
+
+
+
+
+" BAD HABIT BREAKER (vimcasts.org)
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>

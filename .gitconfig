@@ -1,6 +1,6 @@
 [core]
 	quotepath = false
-    editor = vim
+	editor = mvim -vf
     excludesfile = /Users/david/.dotfiles/.globalgitignore
 [user]
     name = Dave Baker
@@ -31,3 +31,5 @@
 [alias]
 	co = checkout
 	ci = commit
+[branch]
+	autosetuprebase = always

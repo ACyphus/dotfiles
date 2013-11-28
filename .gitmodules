@@ -82,3 +82,12 @@
 [submodule ".vim/bundle/vim-ruby-xmpfilter"]
 	path = .vim/bundle/vim-ruby-xmpfilter
 	url = https://github.com/t9md/vim-ruby-xmpfilter.git
+[submodule ".vim/bundle/neosnippet.vim"]
+	path = .vim/bundle/neosnippet.vim
+	url = https://github.com/Shougo/neosnippet.vim.git
+[submodule ".vim/bundle/neocomplete.vim"]
+	path = .vim/bundle/neocomplete.vim
+	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule ".vim/bundle/emmet.vim"]
+	path = .vim/bundle/emmet.vim
+	url = https://github.com/mattn/emmet-vim.git
