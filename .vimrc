@@ -9,9 +9,7 @@ filetype plugin indent on
 set nocompatible
 
 " include system copy buffer
-if $TMUX == ''
-    set clipboard+=unnamed
-endif
+set clipboard+=unnamed
 
 " enable mouse support
 set mouse=a
@@ -23,6 +21,10 @@ set ts=4
 set sts=4
 set shiftwidth=4
 set expandtab
+
+" Code folding
+set fdm=indent
+set foldlevelstart=20
 
 " Context-dependent cursor in the terminal
 if exists('$TMUX')
@@ -75,7 +77,7 @@ nnoremap <tab> %
 vnoremap <tab> %
 map <leader><space> :nohl<cr>
 " map Silver Searcher
-map <leader>a :Ag!<space>
+map <C-f> :Ag!<space>
 
 " put useful info in status bar
 set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
@@ -90,30 +92,27 @@ highlight SpecialKey guifg=#4a4a59
 " save all buffers on focus lost
 au FocusLost * :wa
 
-" [[ Theming/Colors
-" ensure we have 256 color compatibility
-set t_Co=256
-
+" [[ THEMES / STYLES
 " airline themeing
 let g:airline_powerline_fonts=1
-let g:airline_theme='molokai'
-
-colorscheme tomorrow-night
-set background=dark
-
+let g:airline_theme='base16'
+" different bg colour from 101 char onwards
+"let &colorcolumn=join(range(101,999),",")
 " prevent text background differing from vim/term bg
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
-
-if has("gui_running")
-    set guifont=Sauce\ Code\ Powerline:h14
-end
-
+" main font and colorscheme
+set t_Co=256
+set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+set background=dark
+colorscheme base16-ocean
 " set up some custom colors
 highlight clear SignColumn
 highlight Visual       ctermbg=3   ctermfg=0
 highlight SpellBad     ctermbg=0   ctermfg=1
-
+" remove/hide the border between splits
+set fillchars+=vert:\ 
+highlight VertSplit guifg=fg guibg=bg
 " ]]
 
 " [[ Misc Settings
@@ -122,66 +121,38 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 inoremap {<CR> {<CR>}<Esc>ko
 
 " syntastic PHP config
-let g:syntastic_php_checkers=['php'] ", 'phpmd', 'phpcs']
+let g:syntastic_php_checkers=['php', 'phpmd', 'phpcs']
 
-" ]]
-
-" [[ Keybindings
-
-" C MAP
-map <leader>cc :!cap deploy:cleanup<cr>
-map <leader>cd :!cap deploy<cr>
-map <leader>cp :!cap prod deploy<cr>
-
-" B MAP
-map <leader>b :!open -a Google\ Chrome %<cr>
-
-" E MAP
-nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-
-" F MAP
-let g:ctrlp_map = '<leader>f'
+" user ctrp like textmate/sublime ctrl/cmd-T
+let g:ctrlp_map = '<C-t>'
 let g:ctrlp_max_height = 30
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_reversed = 0
 
-" G MAP
-map <leader>gc :!git commit % -m '
-map <leader>gd :!git diff<cr>
-map <leader>gl :!git log --format='%h - %s (%cr) <%an>'<cr>
-map <leader>gp :!git push<cr>
-map <leader>gs :!git status<cr>
+map <C-m> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
 
-" J MAP
-inoremap jj <ESC>
-
-" M MAP
-map <leader>m :!open -a Mou %<cr><cr>
-
-" N MAP
+" NERDTree settings
 map <leader>n :NERDTreeToggle<cr>
+" let g:NERDTreeWinPos = 'right'
+" set guioptions-=T " remove top toolbar
+set guioptions-=r " remove right scroll
+set guioptions-=L " remove left scroll
+" ]]
 
-" P MAP
+
+nmap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+inoremap jj <ESC>
 map <leader>p :set paste!<CR>
-
-" R MAP
-map <leader>r :TagbarToggle<CR>
-
-" T MAP
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
-
-" W MAP
 nnoremap <leader>w <C-w>v<C-w>l
 map <leader>W :%s/\s\+$//gce \| w<cr>
-
-" CTRL MAP
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
 map <C-L> <C-W>l
 map <C-H> <C-W>h
-
-" ]]
 
 " [[ Specific File Type Settings
 
@@ -269,13 +240,8 @@ endfunction
 
 " [[ xmpfilter for ruby
 
-nmap <buffer> <leader>x <Plug>(xmpfilter-run)
-xmap <buffer> <leader>x <Plug>(xmpfilter-run)
-imap <buffer> <leader>x <Plug>(xmpfilter-run)
-
-nmap <buffer> <leader>X <Plug>(xmpfilter-mark)
-xmap <buffer> <leader>X <Plug>(xmpfilter-mark)
-imap <buffer> <leader>X <Plug>(xmpfilter-mark)
+map <buffer> <F4> <Plug>(xmpfilter-run)
+map <buffer> <F5> <Plug>(xmpfilter-mark)
 
 " ]]
 
@@ -338,7 +304,10 @@ endif
 
 " ]]
 
-
+" PHP Refactoring bundle https://github.com/vim-php/vim-php-refactoring
+" needs the PHAR from
+" https://github.com/QafooLabs/php-refactoring-browser/releases
+let g:php_refactor_command='php /Users/david/Dropbox/Code/refactor.phar'
 
 
 " BAD HABIT BREAKER (vimcasts.org)
@@ -346,3 +315,4 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+

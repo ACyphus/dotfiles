@@ -1,6 +1,6 @@
 [core]
 	quotepath = false
-	editor = mvim -vf
+	editor = mvim -f
     excludesfile = /Users/david/.dotfiles/.globalgitignore
 [user]
     name = Dave Baker
